@@ -1,1230 +1,595 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gulfam Ali | Full-Stack IT Developer</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- Custom CSS -->
-    <style>
-        :root {
-            --primary: #6366F1;
-            --primary-dark: #4F46E5;
-            --secondary: #EC4899;
-            --dark: #0F172A;
-            --dark-light: #1E293B;
-            --light: #F1F5F9;
-            --accent: #06D6A0;
-            --text: #E2E8F0;
-            --text-light: #94A3B8;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        [data-theme="light"] {
-            --dark: #F8FAFC;
-            --dark-light: #F1F5F9;
-            --light: #0F172A;
-            --text: #1E293B;
-            --text-light: #475569;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--dark);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-        }
-
-        /* Custom Cursor */
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-follower {
-            width: 40px;
-            height: 40px;
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform 0.3s ease;
-            mix-blend-mode: difference;
-        }
-
-        /* Particle Container */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        /* Header & Navigation */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 25px 0;
-            transition: all 0.5s ease;
-        }
-
-        header.scrolled {
-            background-color: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        [data-theme="light"] header.scrolled {
-            background-color: rgba(248, 250, 252, 0.95);
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo span {
-            color: var(--light);
-        }
-
-        .logo i {
-            color: var(--secondary);
-            font-size: 24px;
-            animation: spin 10s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            position: relative;
-            transition: color 0.3s ease;
-            margin: 0 15px;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .theme-toggle {
-            background: var(--gradient);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
-        }
-
-        .theme-toggle:hover {
-            transform: rotate(30deg);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding-top: 100px;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
-            z-index: -1;
-        }
-
-        .hero-text h1 {
-            font-size: 4.5rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradient-shift 5s ease infinite;
-            background-size: 200% auto;
-        }
-
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .hero-text h2 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: var(--text-light);
-            max-width: 90%;
-        }
-
-        .typed-text {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        /* Animated Profile Picture */
-        .profile-container {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            margin: 0 auto;
-        }
-
-        .profile-frame {
-            width: 100%;
-            height: 100%;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            background: var(--gradient);
-            position: relative;
-            animation: morphing 10s infinite;
-            overflow: hidden;
-            box-shadow: 
-                0 0 50px rgba(99, 102, 241, 0.5),
-                inset 0 0 50px rgba(255, 255, 255, 0.1);
-        }
-
-        @keyframes morphing {
-            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
-            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
-            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
-            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-        }
-
-        .profile-img {
-            width: 90%;
-            height: 90%;
-            object-fit: cover;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            position: absolute;
-            top: 5%;
-            left: 5%;
-            animation: morphing 10s infinite;
-            animation-delay: 0.1s;
-            filter: saturate(1.2) contrast(1.1);
-        }
-
-        .profile-orbits {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .orbit {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px dashed rgba(99, 102, 241, 0.3);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: orbit 20s linear infinite;
-        }
-
-        .orbit:nth-child(1) { width: 110%; height: 110%; animation-duration: 25s; }
-        .orbit:nth-child(2) { width: 130%; height: 130%; animation-duration: 30s; animation-direction: reverse; }
-        .orbit:nth-child(3) { width: 150%; height: 150%; animation-duration: 35s; }
-
-        @keyframes orbit {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* Buttons */
-        .btn-custom {
-            display: inline-block;
-            padding: 15px 35px;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-            z-index: 1;
-        }
-
-        .btn-custom:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-custom:active {
-            transform: translateY(-2px);
-        }
-
-        .btn-custom::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--primary-dark), var(--secondary));
-            z-index: -1;
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            border-radius: 50px;
-        }
-
-        .btn-custom:hover::before {
-            opacity: 1;
-        }
-
-        .btn-outline-custom {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            margin-left: 15px;
-        }
-
-        .btn-outline-custom:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Section Styling */
-        section {
-            padding: 120px 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-title h2 {
-            font-size: 3.2rem;
-            display: inline-block;
-            position: relative;
-            color: var(--light);
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-
-        /* Skills Section */
-        .skill-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            height: 100%;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .skill-card:hover::before {
-            opacity: 0.1;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            border-color: var(--primary);
-        }
-
-        .skill-icon {
-            font-size: 50px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 25px;
-        }
-
-        .skill-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .skill-card p {
-            color: var(--text-light);
-        }
-
-        /* Portfolio Section */
-        .portfolio-filter {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--gradient);
-            color: white;
-            border-color: transparent;
-        }
-
-        .portfolio-item {
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            height: 300px;
-            cursor: pointer;
-            margin-bottom: 30px;
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .portfolio-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 30px;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-        }
-
-        /* Contact Section */
-        .contact-form {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .form-control-custom {
-            width: 100%;
-            padding: 18px 25px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: var(--text);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            margin-bottom: 25px;
-        }
-
-        .form-control-custom:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-light);
-            padding: 70px 0 30px;
-            text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 40px 0;
-        }
-
-        .social-link {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text);
-            font-size: 22px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            background: var(--gradient);
-            color: white;
-            transform: translateY(-5px) rotate(10deg);
-        }
-
-        .copyright {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Animation Classes */
-        .reveal {
-            position: relative;
-            transform: translateY(50px);
-            opacity: 0;
-            transition: all 0.8s ease;
-        }
-
-        .reveal.active {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-text h1 {
-                font-size: 3.5rem;
-            }
-            
-            .hero-text h2 {
-                font-size: 1.8rem;
-            }
-            
-            .profile-container {
-                width: 350px;
-                height: 350px;
-            }
-            
-            .section-title h2 {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: var(--dark);
-                flex-direction: column;
-                align-items: center;
-                padding: 30px 0;
-                gap: 25px;
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: all 0.4s ease;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            }
-            
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 2.8rem;
-            }
-            
-            .hero-text h2 {
-                font-size: 1.5rem;
-            }
-            
-            .profile-container {
-                width: 280px;
-                height: 280px;
-                margin-top: 30px;
-            }
-            
-            .section-title h2 {
-                font-size: 2.5rem;
-            }
-            
-            .btn-custom, .btn-outline-custom {
-                display: block;
-                width: 100%;
-                margin: 10px 0;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-text h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero-text p {
-                font-size: 1rem;
-            }
-            
-            .profile-container {
-                width: 250px;
-                height: 250px;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
-            
-            .contact-form {
-                padding: 30px;
-            }
-            
-            .cursor, .cursor-follower {
-                display: none;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VelocityPOS Privacy Policy</title>
+  <meta name="description" content="Privacy Policy for VelocityPOS (Point of Sale app)." />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --text:#e6edf3;
+      --muted:#a7b3c2;
+      --border:#203042;
+      --accent:#00c853; /* Velocity green */
+      --accent2:#2dd4bf;
+      --link:#7ee787;
+      --warn:#fbbf24;
+      --danger:#fb7185;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --radius:16px;
+      --max: 980px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(900px 500px at 10% 5%, rgba(0,200,83,.18), transparent 60%),
+        radial-gradient(700px 500px at 90% 10%, rgba(45,212,191,.12), transparent 55%),
+        linear-gradient(180deg, #070a0f, var(--bg));
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:var(--link); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 72px}
+    header{
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin: 10px 0 18px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-width:min(520px, 100%);
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(17,24,38,.65);
+      backdrop-filter: blur(10px);
+      width:fit-content;
+      box-shadow: var(--shadow);
+    }
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background:var(--accent);
+      box-shadow: 0 0 0 6px rgba(0,200,83,.12);
+    }
+    h1{
+      font-size: clamp(26px, 3vw, 38px);
+      margin:0;
+      letter-spacing:.2px;
+    }
+    .sub{
+      color:var(--muted);
+      margin:0;
+      max-width: 70ch;
+    }
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      margin-top:2px;
+    }
+    .pill{
+      border:1px solid var(--border);
+      background:rgba(17,24,38,.55);
+      border-radius:999px;
+      padding:8px 12px;
+      color:var(--muted);
+      font-size: 13px;
+      white-space:nowrap;
+    }
+
+    .card{
+      background: rgba(17,24,38,.72);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+      .meta{justify-content:flex-start}
+      .brand{min-width:100%}
+    }
+
+    h2{
+      margin: 0 0 8px;
+      font-size: 20px;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+    }
+    h3{
+      margin: 14px 0 6px;
+      font-size: 16px;
+      color: #dbe7f3;
+    }
+    p{margin: 8px 0}
+    ul{margin: 8px 0 8px 18px}
+    li{margin: 6px 0}
+    .muted{color:var(--muted)}
+    .notice{
+      border:1px solid rgba(0,200,83,.35);
+      background: rgba(0,200,83,.08);
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: #d9ffe8;
+    }
+    .warn{
+      border:1px solid rgba(251,191,36,.38);
+      background: rgba(251,191,36,.10);
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: #fff5d6;
+    }
+    .danger{
+      border:1px solid rgba(251,113,133,.35);
+      background: rgba(251,113,133,.10);
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: #ffe3ea;
+    }
+
+    .toc a{display:block; padding:8px 10px; border-radius:12px}
+    .toc a:hover{background: rgba(255,255,255,.04)}
+    code,kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .95em;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top:10px;
+      overflow:hidden;
+      border-radius: 14px;
+      border:1px solid var(--border);
+    }
+    th,td{
+      text-align:left;
+      vertical-align:top;
+      padding: 10px 10px;
+      border-bottom:1px solid var(--border);
+    }
+    th{
+      color:#dbe7f3;
+      background: rgba(255,255,255,.03);
+      font-weight: 650;
+    }
+    tr:last-child td{border-bottom:none}
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top:1px solid var(--border);
+      padding-top: 14px;
+    }
+    .small{font-size:13px}
+    .split{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+    }
+  </style>
 </head>
-<body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-    
-    <!-- Particle Background -->
-    <div id="particles-js"></div>
 
-    <!-- Header & Navigation -->
-    <header id="header">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <a href="#" class="logo">
-                        <i class="fas fa-code"></i>
-                        Gulfam<span>Ali</span>
-                    </a>
-                    
-                    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <div class="navbar-nav ms-auto nav-links">
-                            <a class="nav-link" href="#home">Home</a>
-                            <a class="nav-link" href="#about">About</a>
-                            <a class="nav-link" href="#skills">Skills</a>
-                            <a class="nav-link" href="#portfolio">Portfolio</a>
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </div>
-                        <button class="theme-toggle ms-3" id="themeToggle">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                    </div>
-                </div>
-            </nav>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="badge">
+          <span class="dot" aria-hidden="true"></span>
+          <strong>VelocityPOS</strong>
+          <span class="muted">Privacy Policy</span>
         </div>
+        <h1>Privacy Policy</h1>
+        <p class="sub">
+          This Privacy Policy explains how <strong>VelocityPOS</strong> (a Point of Sale app built with Flutter and Firebase)
+          collects, uses, stores, and shares information when you use the app.
+        </p>
+      </div>
+
+      <div class="meta">
+        <div class="pill"><strong>Effective date:</strong> 2026-03-30</div>
+        <div class="pill"><strong>Last updated:</strong> 2026-03-30</div>
+      </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="hero-text">
-                        <h1 class="animate__animated animate__fadeInUp">Gulfam Ali</h1>
-                        <h2 class="animate__animated animate__fadeInUp animate__delay-1s">
-                            <span class="typed-text" id="typed-text"></span>
-                        </h2>
-                        <p class="animate__animated animate__fadeInUp animate__delay-2s">
-                            I create exceptional digital experiences with cutting-edge technologies. 
-                            As a full-stack developer specializing in web applications, SaaS solutions, 
-                            and modern IT development, I transform ideas into high-performance digital products.
-                        </p>
-                        <div class="animate__animated animate__fadeInUp animate__delay-3s">
-                            <a href="#portfolio" class="btn-custom">View My Work</a>
-                            <a href="#contact" class="btn-custom btn-outline-custom">Get In Touch</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-6">
-                    <div class="profile-container">
-                        <div class="profile-frame">
-                            <!-- Profile Image - Replace with your actual image -->
-                           <img src="https://avatars.githubusercontent.com/u/140166609?v=4&size=400" alt="Gulfam Ali" class="profile-img">
-                            <div class="profile-orbits">
-                                <div class="orbit"></div>
-                                <div class="orbit"></div>
-                                <div class="orbit"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="grid">
+      <section class="card">
+        <div class="notice">
+          <strong>Quick summary:</strong>
+          VelocityPOS is designed for retail business operations (billing, inventory, customers, reports) with offline-first storage and cloud sync.
+          The app may process business data you enter (products, customers, sales) and account information for login (email/password or Google Sign-In).
         </div>
+
+        <h2 id="overview">1) Overview</h2>
+        <p>
+          VelocityPOS (“<strong>we</strong>”, “<strong>our</strong>”, “<strong>us</strong>”) is a Point of Sale (POS) application
+          that helps retailers manage sales, inventory, customers, receipts, and reports. The app supports offline use with local storage
+          and may synchronize data to the cloud (for example, using Firebase services).
+        </p>
+        <p class="muted small">
+          Note: This document is a general privacy policy template tailored to VelocityPOS features. You should review it with a legal professional
+          and ensure it matches your exact implementation (what you collect, where you store it, and which third-party services you enable).
+        </p>
+
+        <h2 id="who">2) Who this policy applies to</h2>
+        <p>
+          This policy applies to anyone who installs or uses VelocityPOS, including:
+        </p>
+        <ul>
+          <li><strong>Business owners/administrators</strong> who configure the app and manage users.</li>
+          <li><strong>Managers and staff</strong> who create sales, manage inventory, and handle customers.</li>
+          <li><strong>Customers of the business</strong> whose data is entered into the POS by the business (for example, name, phone, purchase history).</li>
+        </ul>
+
+        <h2 id="data-we-collect">3) Information we collect</h2>
+
+        <h3 id="account-data">3.1 Account and authentication data</h3>
+        <p>
+          When you sign in to VelocityPOS, we may collect or process:
+        </p>
+        <ul>
+          <li><strong>Email address</strong> and password (for email/password login). Passwords should be stored/handled securely by the authentication provider.</li>
+          <li><strong>Google account information</strong> (for Google Sign-In), such as your Google profile name and profile photo (if available) and email address.</li>
+          <li><strong>Session tokens</strong> or similar credentials to keep you logged in (e.g., “Remember Me”).</li>
+        </ul>
+
+        <h3 id="business-data">3.2 Business data you enter in the app</h3>
+        <p>
+          VelocityPOS is a POS system, so it may store data that you (or your staff) enter, including:
+        </p>
+        <ul>
+          <li><strong>Product data</strong> (name, category, barcode/SKU, pricing, stock quantities, tax rates, supplier info, optional image URLs).</li>
+          <li><strong>Customer data</strong> (name, phone number, email address, address, notes, loyalty points, credit limit, purchase history).</li>
+          <li><strong>Sales and transaction data</strong> (items sold, totals, taxes, discounts, payment method, timestamps, invoice numbers, receipts).</li>
+          <li><strong>Inventory activity</strong> (stock adjustments, low-stock thresholds, stock movement logs).</li>
+          <li><strong>Settings and preferences</strong> (business profile, receipt settings, tax configuration, theme/language, notification preferences).</li>
+        </ul>
+
+        <h3 id="device-data">3.3 Device and app data</h3>
+        <p>
+          Depending on your configuration and enabled features, the app may collect:
+        </p>
+        <ul>
+          <li><strong>Device information</strong> (such as device model, operating system version) to help with debugging and compatibility.</li>
+          <li><strong>App performance data</strong> (crash logs, diagnostics) if you enable analytics/crash reporting services.</li>
+          <li><strong>Approximate timestamps</strong> of actions (e.g., logins, sales creation, sync events) for audit and operational purposes.</li>
+        </ul>
+
+        <h3 id="media-data">3.4 Images and media</h3>
+        <p>
+          VelocityPOS may display product images by loading them from <strong>image URLs</strong> entered in the app. The app may request those URLs
+          over the internet to display the images. If you use receipt sharing (WhatsApp/Email/SMS) or export features (PDF/CSV/Excel), the app may
+          generate files and store them on your device.
+        </p>
+
+        <div class="warn" id="customer-responsibility">
+          <strong>Important for businesses:</strong> If you enter your customers’ personal data (like phone/email/address), you are responsible for
+          providing appropriate notice to your customers and ensuring you have a lawful basis to collect and use their data.
+        </div>
+
+        <h2 id="how-we-use">4) How we use information</h2>
+        <p>We use information to:</p>
+        <ul>
+          <li><strong>Provide POS functionality</strong> (billing, inventory, customer management, receipts, reports).</li>
+          <li><strong>Authenticate users</strong> and enforce role-based access (Admin/Manager/Staff).</li>
+          <li><strong>Sync data</strong> across devices and restore data when you log in on a new phone (if cloud sync is enabled).</li>
+          <li><strong>Enable offline-first operation</strong> by storing data locally and later synchronizing when internet is available.</li>
+          <li><strong>Improve reliability</strong> (troubleshoot bugs, respond to support requests, prevent misuse and fraud).</li>
+          <li><strong>Comply with legal obligations</strong> where applicable (tax records, accounting, lawful requests).</li>
+        </ul>
+
+        <h2 id="legal-basis">5) Legal bases (where applicable)</h2>
+        <p class="muted">
+          If your users are in regions where privacy laws require a legal basis (e.g., GDPR), you may rely on one or more of the following:
+        </p>
+        <ul>
+          <li><strong>Contract/Service delivery:</strong> to provide the POS service you requested.</li>
+          <li><strong>Legitimate interests:</strong> to keep the service secure and functioning.</li>
+          <li><strong>Consent:</strong> where you choose to enable optional analytics/marketing features.</li>
+          <li><strong>Legal obligations:</strong> to comply with accounting/tax and regulatory requirements.</li>
+        </ul>
+
+        <h2 id="sharing">6) When we share information</h2>
+        <p>
+          We do not sell personal information. We may share data only in the following cases:
+        </p>
+
+        <h3>6.1 Service providers (processors)</h3>
+        <p>
+          VelocityPOS may use third-party services to operate, such as:
+        </p>
+        <ul>
+          <li><strong>Firebase Authentication</strong> for login and account security.</li>
+          <li><strong>Firebase Firestore</strong> (or similar) for cloud database and synchronization.</li>
+          <li><strong>Cloud storage</strong> (if enabled) for backups or storing certain files.</li>
+        </ul>
+        <p class="muted small">
+          These providers process data on our behalf to deliver the app’s features, subject to their own terms and security measures.
+        </p>
+
+        <h3>6.2 Legal compliance and protection</h3>
+        <p>
+          We may disclose information if required by law, regulation, legal process, or enforceable governmental request, or when we believe disclosure is
+          necessary to protect the rights, property, or safety of users, the public, or our service.
+        </p>
+
+        <h3>6.3 Business data visibility inside your organization</h3>
+        <p>
+          If your business uses multiple staff accounts, admins and managers may be able to view operational data based on role permissions
+          (for example, sales history, customer records, inventory).
+        </p>
+
+        <h2 id="storage">7) How we store and secure data</h2>
+
+        <h3>7.1 Offline-first local storage (on device)</h3>
+        <p>
+          VelocityPOS supports offline operation by storing data locally on your device (for example, using SQLite). This may include your products,
+          customers, sales, and settings.
+        </p>
+
+        <h3>7.2 Cloud synchronization</h3>
+        <p>
+          If cloud sync is enabled, the app synchronizes your business data to the cloud so it can be restored on new devices and kept consistent
+          across devices. Sync typically happens when an internet connection is available.
+        </p>
+
+        <h3>7.3 Security measures</h3>
+        <p>
+          We use reasonable administrative, technical, and organizational measures designed to protect data, such as:
+        </p>
+        <ul>
+          <li>Access control via authentication and role-based permissions.</li>
+          <li>Secure transport (HTTPS/TLS) when communicating with cloud services.</li>
+          <li>Session management features (timeout, logout, token refresh).</li>
+          <li>Best-effort secure local storage (device security also matters).</li>
+        </ul>
+
+        <div class="danger">
+          <strong>Your responsibility:</strong> Protect your device with a strong screen lock, do not share admin credentials, and use secure passwords.
+          If the device is rooted/jailbroken or infected with malware, local POS data could be exposed.
+        </div>
+
+        <h2 id="retention">8) Data retention</h2>
+        <p>
+          We keep data for as long as needed to provide the service and for legitimate business purposes such as accounting, auditing, dispute resolution,
+          and compliance with legal requirements.
+        </p>
+        <ul>
+          <li><strong>Account data</strong> is retained while your account is active and as needed for security and compliance.</li>
+          <li><strong>Business records</strong> (sales, invoices) may need to be retained longer for tax/accounting requirements depending on your country.</li>
+          <li><strong>Local device data</strong> remains on the device until you clear app storage, uninstall the app, or delete records in the app.</li>
+        </ul>
+
+        <h2 id="your-rights">9) Your rights and choices</h2>
+
+        <h3>9.1 Access, update, and delete (inside the app)</h3>
+        <p>
+          VelocityPOS allows businesses to view, edit, and delete many types of business data (products, customers, sales) depending on user role permissions.
+        </p>
+
+        <h3>9.2 Account actions</h3>
+        <ul>
+          <li>You can update some account profile details depending on your authentication method.</li>
+          <li>You can reset your password using the “Forgot Password” feature (email/password accounts).</li>
+          <li>You can sign out at any time. If “Remember Me” is enabled, you may stay logged in until you log out or the session expires.</li>
+        </ul>
+
+        <h3>9.3 Deleting data</h3>
+        <p>
+          Data deletion may be possible through in-app tools. If your app uses cloud sync, deletion may also remove records from cloud storage
+          (depending on implementation). Some records may be retained where required by law.
+        </p>
+
+        <h3>9.4 Marketing</h3>
+        <p>
+          VelocityPOS is primarily a utility/business app. If you add marketing communications in the future, you should provide opt-out mechanisms.
+        </p>
+
+        <h2 id="children">10) Children’s privacy</h2>
+        <p>
+          VelocityPOS is not intended for children under 13 (or the minimum age required by local law) and we do not knowingly collect personal information
+          from children. If you believe a child has provided personal data, contact us to request deletion.
+        </p>
+
+        <h2 id="intl-transfers">11) International data transfers</h2>
+        <p>
+          If you use cloud services (such as Firebase), your data may be processed in countries other than where you live. These transfers may be necessary
+          to provide the app. Where required, we rely on appropriate safeguards provided by the service provider.
+        </p>
+
+        <h2 id="third-party">12) Third-party links and services</h2>
+        <p>
+          The app may include integrations or actions that involve third parties, for example:
+        </p>
+        <ul>
+          <li>Google Sign-In authentication</li>
+          <li>Opening product image URLs from the internet</li>
+          <li>Sharing receipts via WhatsApp/Email/SMS using other apps on your device</li>
+        </ul>
+        <p class="muted">
+          Third-party services have their own privacy policies. We recommend reviewing them.
+        </p>
+
+        <h2 id="security-best-practices">13) Security best practices for POS businesses</h2>
+        <ul>
+          <li>Use unique accounts for each staff member; avoid sharing credentials.</li>
+          <li>Assign the least privilege needed (Staff vs Manager vs Admin).</li>
+          <li>Enable session timeouts and log out on shared devices.</li>
+          <li>Back up data securely and restrict access to exports (PDF/CSV/Excel).</li>
+          <li>Limit customer data collection to what you truly need.</li>
+        </ul>
+
+        <h2 id="changes">14) Changes to this Privacy Policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time. We will update the “Last updated” date at the top.
+          Material changes may be communicated through the app or release notes.
+        </p>
+
+        <h2 id="contact">15) Contact us</h2>
+        <p>
+          If you have questions, requests, or complaints about privacy, contact:
+        </p>
+        <ul>
+          <li><strong>Developer:</strong> Gulfam Ali</li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/gulfamali16" rel="noopener" target="_blank">@gulfamali16</a></li>
+          <li><strong>Email:</strong> <span class="muted">[add your support email here]</span></li>
+        </ul>
+
+        <footer>
+          <p class="small">
+            <strong>Disclaimer:</strong> This page is provided for informational purposes and does not constitute legal advice.
+            Your obligations depend on your jurisdiction, your business model, and which VelocityPOS features/services you enable.
+          </p>
+        </footer>
+      </section>
+
+      <aside class="card toc" aria-label="Table of contents">
+        <h2>Contents</h2>
+        <nav>
+          <a href="#overview">1) Overview</a>
+          <a href="#who">2) Who this policy applies to</a>
+          <a href="#data-we-collect">3) Information we collect</a>
+          <a href="#how-we-use">4) How we use information</a>
+          <a href="#legal-basis">5) Legal bases</a>
+          <a href="#sharing">6) When we share information</a>
+          <a href="#storage">7) Storage & security</a>
+          <a href="#retention">8) Data retention</a>
+          <a href="#your-rights">9) Your rights & choices</a>
+          <a href="#children">10) Children’s privacy</a>
+          <a href="#intl-transfers">11) International transfers</a>
+          <a href="#third-party">12) Third-party services</a>
+          <a href="#security-best-practices">13) POS security best practices</a>
+          <a href="#changes">14) Changes</a>
+          <a href="#contact">15) Contact</a>
+        </nav>
+
+        <div class="card" style="margin-top:14px; padding:14px;">
+          <h3 style="margin-top:0;">Data types (at a glance)</h3>
+          <div class="split">
+            <span class="tag">Account</span>
+            <span class="tag">Products</span>
+            <span class="tag">Customers</span>
+            <span class="tag">Sales</span>
+            <span class="tag">Inventory</span>
+            <span class="tag">Receipts</span>
+            <span class="tag">Offline storage</span>
+            <span class="tag">Cloud sync</span>
+          </div>
+
+          <h3>Notes for Play Console</h3>
+          <p class="muted small" style="margin-top:6px;">
+            Make sure your Play Console “Data safety” answers match your real implementation
+            (e.g., if you collect crash logs, location, contacts, etc.).
+          </p>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <h3 style="margin-top:0;">Optional: Add a company name</h3>
+          <p class="muted small">
+            If VelocityPOS will be used by many businesses, you can rephrase this policy to clarify whether you (developer) are the “data controller”
+            or whether each business is the controller for customer data entered into the POS.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="card">
+      <h2 id="data-table">Appendix: Typical data in VelocityPOS</h2>
+      <p class="muted">
+        This table helps you (and reviewers) understand what POS data may exist in the app. Adjust to match your code.
+      </p>
+
+      <table aria-label="Typical data categories">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Examples</th>
+            <th>Purpose</th>
+            <th>Where stored</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Authentication</strong></td>
+            <td>Email, Google Sign-In profile info, session tokens</td>
+            <td>Account creation, login, security, role access</td>
+            <td>Auth provider (e.g., Firebase Auth) + device session storage</td>
+          </tr>
+          <tr>
+            <td><strong>Products</strong></td>
+            <td>Name, SKU/barcode, pricing, tax, stock, category, image URL</td>
+            <td>Inventory and billing</td>
+            <td>Local DB (offline) and optional cloud sync</td>
+          </tr>
+          <tr>
+            <td><strong>Customers</strong></td>
+            <td>Name, phone, email, address, notes, loyalty points</td>
+            <td>CRM, loyalty, receipts, analytics</td>
+            <td>Local DB and optional cloud sync</td>
+          </tr>
+          <tr>
+            <td><strong>Sales</strong></td>
+            <td>Invoices, items, totals, taxes, discounts, payment method, timestamps</td>
+            <td>Billing, reporting, accounting</td>
+            <td>Local DB and optional cloud sync</td>
+          </tr>
+          <tr>
+            <td><strong>Receipts & exports</strong></td>
+            <td>PDF receipts, CSV/Excel reports</td>
+            <td>Sharing, printing, recordkeeping</td>
+            <td>Device storage; may be shared through third-party apps</td>
+          </tr>
+          <tr>
+            <td><strong>Diagnostics (optional)</strong></td>
+            <td>Crash logs, performance metrics</td>
+            <td>App stability and improvement</td>
+            <td>Analytics/crash provider if enabled</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="muted small">
+        If you don’t use analytics/crash tools, remove that row to keep the policy accurate.
+      </p>
     </section>
-
-    <!-- About Section -->
-    <section id="about" class="reveal">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Me</h2>
-            </div>
-            
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <p class="fs-5 mb-4" style="color: var(--text-light);">
-                        I'm a passionate full-stack developer with expertise in creating sophisticated web applications, 
-                        scalable SaaS platforms, and cutting-edge mobile solutions. With a keen eye for design and a 
-                        strong focus on performance, I deliver digital products that not only look exceptional but 
-                        also provide seamless user experiences.
-                    </p>
-                    
-                    <div class="row mt-5 g-4">
-                        <div class="col-md-4">
-                            <div class="p-4 rounded-3" style="background: rgba(99, 102, 241, 0.1);">
-                                <h3 class="text-primary fs-1 fw-bold mb-2">50+</h3>
-                                <p class="mb-0" style="color: var(--text-light);">Projects Completed</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="p-4 rounded-3" style="background: rgba(236, 72, 153, 0.1);">
-                                <h3 class="text-danger fs-1 fw-bold mb-2">5+</h3>
-                                <p class="mb-0" style="color: var(--text-light);">Years Experience</p>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="p-4 rounded-3" style="background: rgba(6, 214, 160, 0.1);">
-                                <h3 class="text-success fs-1 fw-bold mb-2">100%</h3>
-                                <p class="mb-0" style="color: var(--text-light);">Client Satisfaction</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="reveal">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Expertise</h2>
-            </div>
-            
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3>Web Development</h3>
-                        <p>Creating responsive, high-performance websites using modern technologies like React, Vue, Node.js, and cutting-edge CSS frameworks.</p>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-cloud"></i>
-                        </div>
-                        <h3>SaaS Development</h3>
-                        <p>Building scalable Software-as-a-Service platforms with cloud infrastructure, microservices architecture, and secure payment integrations.</p>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3>App Development</h3>
-                        <p>Developing cross-platform mobile applications with React Native and Flutter, focusing on intuitive UI/UX and seamless performance.</p>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-palette"></i>
-                        </div>
-                        <h3>UI/UX Design</h3>
-                        <p>Crafting visually stunning and user-friendly interfaces with attention to detail, animations, and optimal user journeys.</p>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <h3>Backend Development</h3>
-                        <p>Building robust server-side applications, RESTful APIs, databases, and server infrastructure for scalable applications.</p>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3>Digital Solutions</h3>
-                        <p>Providing end-to-end digital transformation solutions including consulting, strategy, implementation, and optimization.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="reveal">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Portfolio</h2>
-            </div>
-            
-            <div class="portfolio-filter mb-5">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="web">Web Development</button>
-                <button class="filter-btn" data-filter="saas">SaaS Platforms</button>
-                <button class="filter-btn" data-filter="app">Mobile Apps</button>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6 col-lg-4" data-category="web">
-                    <div class="portfolio-item">
-                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="E-commerce Platform">
-                        <div class="portfolio-overlay">
-                            <h3>E-commerce Platform</h3>
-                            <p>Full-featured online store with payment integration</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4" data-category="saas">
-                    <div class="portfolio-item">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Project Management SaaS">
-                        <div class="portfolio-overlay">
-                            <h3>Project Management SaaS</h3>
-                            <p>Collaborative platform for team productivity</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4" data-category="app">
-                    <div class="portfolio-item">
-                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Fitness Tracking App">
-                        <div class="portfolio-overlay">
-                            <h3>Fitness Tracking App</h3>
-                            <p>Mobile app for workout planning and tracking</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="reveal">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-            </div>
-            
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="contact-form">
-                        <form id="contactForm">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control-custom" placeholder="Your Name" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control-custom" placeholder="Your Email" required>
-                                </div>
-                            </div>
-                            
-                            <input type="text" class="form-control-custom" placeholder="Subject" required>
-                            
-                            <textarea class="form-control-custom" rows="5" placeholder="Your Message" required></textarea>
-                            
-                            <button type="submit" class="btn-custom w-100">Send Message</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <a href="#" class="logo d-inline-flex justify-content-center mb-4">
-                <i class="fas fa-code"></i>
-                Gulfam<span>Ali</span>
-            </a>
-            
-            <div class="social-links">
-                <a href="#" class="social-link">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-dribbble"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-codepen"></i>
-                </a>
-            </div>
-            
-            <p class="copyright">
-                &copy; 2023 Gulfam Ali. All Rights Reserved. | Crafted with <i class="fas fa-heart text-danger"></i> and <i class="fas fa-coffee" style="color: #a57c48;"></i>
-            </p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <!-- Custom JS -->
-    <script>
-        // Initialize Particles.js
-        particlesJS("particles-js", {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#6366F1" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#6366F1",
-                    opacity: 0.2,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" }
-                }
-            },
-            retina_detect: true
-        });
-
-        // Custom Cursor
-        const cursor = document.querySelector('.cursor');
-        const follower = document.querySelector('.cursor-follower');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            setTimeout(() => {
-                follower.style.left = e.clientX + 'px';
-                follower.style.top = e.clientY + 'px';
-            }, 100);
-        });
-        
-        // Cursor hover effects
-        document.querySelectorAll('a, button, .portfolio-item, .skill-card').forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.5)';
-                cursor.style.borderColor = '#EC4899';
-                follower.style.transform = 'scale(1.5)';
-                follower.style.background = 'rgba(236, 72, 153, 0.1)';
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursor.style.borderColor = '#6366F1';
-                follower.style.transform = 'scale(1)';
-                follower.style.background = 'rgba(99, 102, 241, 0.1)';
-            });
-        });
-
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-        
-        themeToggle.addEventListener('click', () => {
-            document.body.dataset.theme = document.body.dataset.theme === 'light' ? 'dark' : 'light';
-            themeIcon.className = document.body.dataset.theme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            
-            // Update header background for light theme
-            const header = document.getElementById('header');
-            if (document.body.dataset.theme === 'light' && window.scrollY > 100) {
-                header.style.backgroundColor = 'rgba(248, 250, 252, 0.95)';
-            } else if (window.scrollY > 100) {
-                header.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
-            }
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-                if (document.body.dataset.theme === 'light') {
-                    header.style.backgroundColor = 'rgba(248, 250, 252, 0.95)';
-                }
-            } else {
-                header.classList.remove('scrolled');
-                header.style.backgroundColor = 'transparent';
-            }
-        });
-
-        // Typing effect
-        const typedTextSpan = document.getElementById('typed-text');
-        const textArray = ["Web Developer", "SaaS Developer", "App Developer", "Full-Stack Expert", "IT Consultant"];
-        const typingDelay = 100;
-        const erasingDelay = 50;
-        const newTextDelay = 1500;
-        let textArrayIndex = 0;
-        let charIndex = 0;
-        
-        function type() {
-            if (charIndex < textArray[textArrayIndex].length) {
-                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, typingDelay);
-            } else {
-                setTimeout(erase, newTextDelay);
-            }
-        }
-        
-        function erase() {
-            if (charIndex > 0) {
-                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(erase, erasingDelay);
-            } else {
-                textArrayIndex++;
-                if (textArrayIndex >= textArray.length) textArrayIndex = 0;
-                setTimeout(type, typingDelay + 500);
-            }
-        }
-        
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(type, newTextDelay + 250);
-        });
-
-        // Portfolio filtering
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const portfolioItems = document.querySelectorAll('[data-category]');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
-                button.classList.add('active');
-                
-                const filterValue = button.getAttribute('data-filter');
-                
-                portfolioItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                        item.style.display = 'block';
-                        setTimeout(() => {
-                            item.style.opacity = '1';
-                            item.style.transform = 'scale(1)';
-                        }, 10);
-                    } else {
-                        item.style.opacity = '0';
-                        item.style.transform = 'scale(0.8)';
-                        setTimeout(() => {
-                            item.style.display = 'none';
-                        }, 300);
-                    }
-                });
-            });
-        });
-
-        // Scroll reveal animation
-        function reveal() {
-            const reveals = document.querySelectorAll('.reveal');
-            
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add('active');
-                }
-            }
-        }
-        
-        window.addEventListener('scroll', reveal);
-        reveal(); // Initial check on page load
-
-        // Form submission
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form values
-            const name = contactForm.querySelector('input[type="text"]').value;
-            const email = contactForm.querySelector('input[type="email"]').value;
-            
-            // Show success message
-            const originalButtonText = contactForm.querySelector('button').textContent;
-            contactForm.querySelector('button').innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            contactForm.querySelector('button').style.background = 'linear-gradient(135deg, #06D6A0, #0CB48A)';
-            
-            // Reset form
-            setTimeout(() => {
-                contactForm.reset();
-                contactForm.querySelector('button').textContent = originalButtonText;
-                contactForm.querySelector('button').style.background = '';
-            }, 3000);
-        });
-
-        // Initialize Bootstrap tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    </script>
+  </div>
 </body>
 </html>
